@@ -19,8 +19,8 @@
 	},
 	"production" : {
 		"SITE_SECRET"     : "24rq3w5rwsefrq435",
-		"BASE_URL"        : "https://www.solardata.herokuapp.com",
-		"HOST"            : "www.solardata.herokuapp.com",
+		"BASE_URL"        : "https://solardata.herokuapp.com",
+		"HOST"            : "solardata.herokuapp.com",
 		"db_login"        : {
 			"auth_key"   : "doessoldiftnedivingreder",
 			"auth_secret": "85072aeb42c836f97805bc1abb1465b86f6e0371"
