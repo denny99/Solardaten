@@ -16,7 +16,7 @@ body
         body
             .container(style="padding-bottom: 30px")
                 .row
-                    .col-xs-6
+                    .col-xs-12
                         - var statisticsClass = {'class': ""};
                         - var errorsClass= {'class': ""};
                         case tab
@@ -34,5 +34,10 @@ body
                                 a(href='/errors')
                                     span.glyphicon.glyphicon-warning-sign(style="padding-right: 10px")
                                     | Fehlermeldungen
+
+                            li(role='presentation')
+                                a.bg-primary(href="/logout")
+                                    span.glyphicon.glyphicon-logout(style="padding-right: 5px")
+                                    | Logout
 
             block content
