@@ -26,6 +26,15 @@ var errors = require('./routes/errors');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+if (app.get('env') === "production") {
+	app.set('forceSSLOptions', {
+		enable301Redirects: true,
+		trustXFPHeader    : false,
+		httpsPort         : 443,
+		sslRequiredMessage: 'SSL Required.'
+	});
+}
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
