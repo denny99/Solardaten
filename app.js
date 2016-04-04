@@ -5,8 +5,6 @@ var favicon      = require('serve-favicon');
 var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
-var forceSSL     = require('express-force-ssl');
-
 var app = express();
 
 global._ = require('lodash');
@@ -27,11 +25,19 @@ var errors = require('./routes/errors');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-if (app.get('env') === "production") {
-	app.set('forceSSLOptions', {
-		enable301Redirects: true
-	});
-	app.use(forceSSL);
+/*
+ * function forceHttps
+ * If incoming url without https then reroute to https
+ */
+var forceHttps = function (req, res, next) {
+	console.log('x-forwarded-proto=' + req.headers['x-forwarded-proto']);
+	if (req.headers['x-forwarded-proto'] !== 'https') {
+		return res.redirect(['https://', req.get('Host'), req.url].join(''));
+	}
+	return next();
+};
+if (app.get('env') === 'production') {
+	app.use(forceHttps);
 }
 
 // uncomment after placing your favicon in /public
