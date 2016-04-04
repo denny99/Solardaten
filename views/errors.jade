@@ -1,0 +1,22 @@
+//
+   Created by Denny Müller on 04.04.2016.
+
+extends layout
+
+block content
+    .container
+        .row
+            .col-xs-12
+                table.table.table-striped.table-responsive.table-bordered
+                    tr
+                        th Datum
+                        th Fehlermeldung
+                        th
+                    each error in errors
+                        tr
+                            td !{moment.utc(error.datetime).format("DD.MM.YYYY HH:mm")}
+                            td !{error.reason}
+                            td
+                                - var attr = {'href': '/errors/' + error._id}
+                                a.btn.btn-primary.btn-block&attributes(attr)
+                                    | Ansehen

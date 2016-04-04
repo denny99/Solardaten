@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    script.
+        function submitted() {
+            console.log("test");
+            $.ajax({
+                'url'  : !{path} + "/login",
+                type   : "POST",
+                headers: {
+                    Authorization: "Basic " + base64().encode($('#inputEmail').val() + ":" + $('#inputPassword').val())
+                },
+                success: function (result) {
+                    window.location = "/"
+                },
+                error  : function (result) {
+                    //window.location = "/login?error=invalidCredentials"
+                }
+            });
+        }
+
+    .container.well-lg
+        if (error)
+            .row
+                .col-xs-6.col-xs-offset-3
+                    .alert.alert-danger(role='alert')
+                        | Anmeldedaten waren fehlerhaft
+        .row
+            .col-xs-6.col-xs-offset-3
+                form.form-signin(method="post" onsubmit="submitted()")
+                    h2.form-signin-heading Bitte Anmeldedaten eingeben
+                    label.sr-only(for='inputEmail') E-Mail Adresse
+                    input#inputEmail.form-control(type='email', placeholder='E-Mail Adresse', required='', autofocus='')
+                    label.sr-only(for='inputPassword') Passwort
+                    input#inputPassword.form-control(type='password', placeholder='Passwort', required='')
+                    button.btn.btn-lg.btn-primary.btn-block(type='button', onclick='submitted()') Einloggen

@@ -1,0 +1,88 @@
+extends layout
+
+block content
+    script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
+    script(type="text/javascript").
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data, options, chart;
+
+            //draw pie chart
+            data = google.visualization.arrayToDataTable(
+                    !{JSON.stringify(_.concat([['Trichter', 'kWh']], result.total))});
+
+            options = {
+                title: 'Erzeugte kWh pro Trichter',
+                is3D : true
+            };
+
+            chart = new google.visualization.PieChart(document.getElementById('kilowatthourperunit'));
+            chart.draw(data, options);
+
+            //draw weekly chart
+            data = google.visualization.arrayToDataTable(
+                    !{JSON.stringify(_.concat([['Tag', 'Karl1', 'Karl2', 'Karl3']], result.weekly))});
+
+            options = {
+                title   : 'kWh auf Tagesbasis',
+                subtitle: "Letzten 7 Tage",
+                vAxis   : {format: '#.## kWh'},
+                hAxis   : {
+                    showTextEvery   : 1,
+                    slantedText     : true,
+                    slantedTextAngle: 45
+                }
+            };
+
+            chart = new google.visualization.ColumnChart(document.getElementById('kilowatthourperweek'));
+
+            chart.draw(data, options);
+
+            //draw monthly chart
+            data = google.visualization.arrayToDataTable(
+                    !{JSON.stringify(_.concat([['Monat', 'Karl1', 'Karl2', 'Karl3']], result.monthly))});
+
+            options = {
+                title: 'kWh auf Monatsbasis',
+                vAxis: {format: '#.## kWh'},
+                hAxis: {
+                    showTextEvery   : 1,
+                    slantedText     : true,
+                    slantedTextAngle: 45
+                }
+            };
+
+            chart = new google.visualization.ColumnChart(document.getElementById('kilowatthourpermonth'));
+
+            chart.draw(data, options);
+
+            //draw year chart
+            data = google.visualization.arrayToDataTable(!{JSON.stringify(_.concat([['Jahr', 'Karl1', 'Karl2', 'Karl3']], result.year))});
+
+            options = {
+                title: 'kWh auf Jahresbasis',
+                vAxis: {format: '#.## kWh'},
+                hAxis: {
+                    showTextEvery   : 1,
+                    slantedText     : true,
+                    slantedTextAngle: 45
+                }
+            };
+
+            chart = new google.visualization.ColumnChart(document.getElementById('kilowatthourperyear'));
+
+            chart.draw(data, options);
+        }
+    .container-fluid
+        .row
+            .col-xs-6
+                #kilowatthourperunit(style="width: 100%; height: 400px;")
+            .col-xs-6
+                #kilowatthourperyear(style="width: 100%; height: 400px;")
+        .row
+            .col-xs-6
+                #kilowatthourperweek(style="width: 100%; height: 400px;")
+            .col-xs-6
+                #kilowatthourpermonth(style="width: 100%; height: 400px;")
