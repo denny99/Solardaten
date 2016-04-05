@@ -130,7 +130,7 @@ function EmailController() {
 			"type"    : "error",
 			"reason"  : reason,
 			"message" : message,
-			"datetime": time.toISOString()
+			"datetime": time.isValid() ? time.toISOString() : moment.utc().toISOString()
 		}, function () {
 			console.log("saved error");
 		});
