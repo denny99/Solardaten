@@ -1,7 +1,7 @@
 {
 	"development": {
 		"SITE_SECRET": "24rq3w5rwsefrq435",
-		"BASE_URL"   : "http://localhost:5000",
+		"BASE_URL"   : "http://localhost:3000",
 		"HOST"       : "localhost",
 		"db_login"   : {
 			"auth_key"   : "doessoldiftnedivingreder",

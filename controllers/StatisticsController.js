@@ -16,10 +16,11 @@ function StatisticsController() {
 	var workers = 0;
 
 	var result = {
-		total  : [],
-		weekly : [],
-		monthly: [],
-		year   : []
+		total    : [],
+		weekly   : [],
+		monthly  : [],
+		year     : [],
+		yesterday: []
 	};
 
 	function isFinished(fn) {
@@ -30,16 +31,75 @@ function StatisticsController() {
 
 	self.getTotalOverView = function (fn) {
 		workers++;
-		database.getReportByKeys(0, undefined, undefined, "solarData", "getKilowattHourByUnit", 1,
-			function (err, documents) {
-				workers--;
+		database.getReport(0, undefined, [], [{}], "solarData", "getKilowattHourByUnit", 1, function (err, documents) {
+			workers--;
 
-				documents.forEach(function (doc) {
-					result.total.push([doc.key[0], _.round(doc.value, 2)]);
-				});
+			console.log(documents);
 
-				isFinished(fn)
+			documents.forEach(function (doc) {
+				result.total.push([doc.key[0], _.round(doc.value, 2)]);
 			});
+
+			isFinished(fn)
+		});
+	};
+
+	self.getDailyOverview = function (fn) {
+		var today, yesterday, startKey, endKey, weeklyWorkers, dailyResult;
+
+		dailyResult   = {};
+		weeklyWorkers = 0;
+
+		today     = moment.utc().subtract(1, 'days').hours(23).minutes(59);
+		yesterday = moment.utc().hours(0).minutes(0).subtract(1, 'days');
+
+		for (var i = 1; i < 25; i++) {
+			var day                                     = moment.utc().hours(0).minutes(0).subtract(i, 'hours');
+			dailyResult[day.format("DD.MM.YYYY HH:mm")] = {date: day.format("HH:mm")};
+
+			units.forEach(function (unit) {
+				dailyResult[day.format("DD.MM.YYYY HH:mm")][unit] = 0;
+			});
+		}
+
+		startKey = [yesterday.year(), yesterday.month(), yesterday.date(), yesterday.hours()];
+		endKey   = [today.year(), today.month(), today.date(), today.hours()];
+
+		units.forEach(function (unit) {
+			workers++;
+			weeklyWorkers++;
+
+			database.getReport(0, undefined, _.concat([unit], startKey), _.concat([unit], endKey), "solarData",
+				"getKilowattHourByUnit", 5, function (err, documents) {
+					workers--;
+					weeklyWorkers--;
+					if (!err) {
+						documents.forEach(function (doc) {
+							var date;
+
+							date = moment.utc().set({
+								year : doc.key[1],
+								month: doc.key[2],
+								date : doc.key[3],
+								hours: doc.key[4],
+								minutes: 0
+							}).format("DD.MM.YYYY HH:mm");
+
+							dailyResult[date][doc.key[0]] += _.round(doc.value, 2);
+						});
+
+						if (weeklyWorkers === 0) {
+							result.yesterday = _.reverse(_.map(dailyResult, function (o) {
+								return _.map(o, function (v) {
+									return v;
+								});
+							}));
+						}
+					}
+
+					isFinished(fn);
+				});
+		});
 	};
 
 	self.getWeeklyOverview = function (fn) {
@@ -61,7 +121,7 @@ function StatisticsController() {
 		}
 
 		startKey = [lastWeek.year(), lastWeek.month(), lastWeek.date()];
-		endKey   = [today.year(), today.month(), today.date()];
+		endKey   = [today.year(), today.month(), today.date(), {}];
 
 		units.forEach(function (unit) {
 			workers++;
@@ -81,7 +141,7 @@ function StatisticsController() {
 								date : doc.key[3]
 							}).format("DD.MM.YYYY");
 
-							weeklyResult[date][doc.key[0]] = _.round(doc.value, 2);
+							weeklyResult[date][doc.key[0]] += _.round(doc.value, 2);
 						});
 
 						if (weeklyWorkers === 0) {
@@ -137,7 +197,7 @@ function StatisticsController() {
 					monthlyWorkers--;
 					if (!err) {
 						documents.forEach(function (doc) {
-							monthlyResult[doc.key[2]][doc.key[0]] = _.round(doc.value, 2);
+							monthlyResult[doc.key[2]][doc.key[0]] += _.round(doc.value, 2);
 						});
 
 						if (monthlyWorkers === 0) {
@@ -174,7 +234,7 @@ function StatisticsController() {
 					if (!err) {
 						documents.forEach(function (doc) {
 							if (yearResult.hasOwnProperty(doc.key[1])) {
-								yearResult[doc.key[1].toString()][doc.key[0]] = _.round(doc.value, 2);
+								yearResult[doc.key[1].toString()][doc.key[0]] += _.round(doc.value, 2);
 							}
 							else {
 								yearResult[doc.key[1]] = {date: doc.key[1].toString()};
@@ -201,11 +261,23 @@ function StatisticsController() {
 		});
 	};
 
-	self.run = function (fn) {
-		self.getTotalOverView(fn);
-		self.getWeeklyOverview(fn);
-		self.getMonthlyOverview(fn);
-		self.getYearOverView(fn);
+	self.run = function (type, fn) {
+		switch (type) {
+			case "yesterday":
+				return self.getDailyOverview(fn);
+
+			case "weekly":
+				return self.getWeeklyOverview(fn);
+
+			case "monthly":
+				return self.getMonthlyOverview(fn);
+
+			case "year":
+				return self.getYearOverView(fn);
+
+			default:
+				return self.getTotalOverView(fn);
+		}
 	}
 }
 

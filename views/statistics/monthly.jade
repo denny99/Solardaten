@@ -1,0 +1,24 @@
+script(type="text/javascript").
+    function drawChart() {
+        var data, options, chart;
+
+        //draw monthly chart
+        data = google.visualization.arrayToDataTable(
+                !{JSON.stringify(_.concat([['Monat', 'Karl1', 'Karl2', 'Karl3']], result.monthly))});
+
+        options = {
+            title: 'Produzierte kWh auf Monatsbasis',
+            vAxis: {format: '#.## kWh'},
+            hAxis: {
+                showTextEvery   : 1,
+                slantedText     : true,
+                slantedTextAngle: 45
+            }
+        };
+
+        chart = new google.visualization.ColumnChart(document.getElementById('kilowatthourpermonth'));
+
+        chart.draw(data, options);
+    }
+
+#kilowatthourpermonth(style="width: 100%; height: 800px;")

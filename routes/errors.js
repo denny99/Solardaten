@@ -7,7 +7,7 @@ var database = global.database.getDatabase();
 
 /* GET home page. */
 router.get('/', authMiddleware.isAuthenticated, function (req, res, next) {
-	database.getDocumentsByType(0, 20, false, undefined, "error", "getErrorsByDate", function (err, documents) {
+	database.getDocumentsByType(0, 20, true, undefined, "error", "getErrorsByDate", function (err, documents) {
 		if (!err) {
 			res.render('errors', {
 				title : 'Fehlermeldungen',

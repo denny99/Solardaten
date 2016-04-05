@@ -1,0 +1,24 @@
+script(type="text/javascript").
+    function drawChart() {
+        var data, options, chart;
+
+        //draw year chart
+        data = google.visualization.arrayToDataTable(
+                !{JSON.stringify(_.concat([['Jahr', 'Karl1', 'Karl2', 'Karl3']], result.year))});
+
+        options = {
+            title: 'Produzierte kWh auf Jahresbasis',
+            vAxis: {format: '#.## kWh'},
+            hAxis: {
+                showTextEvery   : 1,
+                slantedText     : true,
+                slantedTextAngle: 45
+            }
+        };
+
+        chart = new google.visualization.ColumnChart(document.getElementById('kilowatthourperyear'));
+
+        chart.draw(data, options);
+    }
+
+#kilowatthourperyear(style="width: 100%; height: 800px;")

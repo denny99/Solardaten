@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var app = express();
 
+console.log("App running in", app.get('env') , "mode");
+
 global._ = require('lodash');
 
 global.config = require('./config.json')[app.get('env')];

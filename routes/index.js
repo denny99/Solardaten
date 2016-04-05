@@ -9,12 +9,13 @@ var router = express.Router();
 router.get('/', authMiddleware.isAuthenticated, function (req, res, next) {
 	var statisticsController = new StatisticsController();
 
-	statisticsController.run(function (result) {
+	statisticsController.run(req.query.type, function (result) {
 		res.render('index', {
-			title: 'Statistiken',
-			tab  : "statistics",
+			title : 'Statistiken',
+			tab   : "statistics",
 			result: result,
-			_: _,
+			pill  : req.query.type,
+			_     : _,
 			moment: moment
 		});
 	});
