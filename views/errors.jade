@@ -8,15 +8,17 @@ block content
         .row
             .col-xs-12
                 table.table.table-striped.table-responsive.table-bordered
-                    tr
-                        th Datum
-                        th Fehlermeldung
-                        th
-                    each error in errors
+                    thead
                         tr
-                            td !{moment.utc(error.datetime).format("DD.MM.YYYY HH:mm")}
-                            td !{error.reason}
-                            td
-                                - var attr = {'href': '/errors/' + error._id}
-                                a.btn.btn-primary.btn-block&attributes(attr)
-                                    | Ansehen
+                            th Datum
+                            th Fehlermeldung
+                            th
+                    tbody
+                        each error in errors
+                            tr
+                                td !{moment.utc(error.datetime).format("DD.MM.YYYY HH:mm")}
+                                td !{error.reason}
+                                td
+                                    - var attr = {'href': '/errors/' + error._id}
+                                    a.btn.btn-primary.btn-block&attributes(attr)
+                                        | Ansehen

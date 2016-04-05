@@ -7,7 +7,7 @@ script(type="text/javascript").
                 !{JSON.stringify(_.concat([['Trichter', 'kWh']], result.total))});
 
         options = {
-            title: 'Erzeugte kWh pro Trichter',
+            title: 'Erzeugte kWh je Wechseltrichter',
             is3D : true
         };
 
@@ -15,4 +15,26 @@ script(type="text/javascript").
         chart.draw(data, options);
     }
 
-#kilowatthourperunit(style="width: 100%; height: 800px;")
+.container-fluid
+    .row
+        .col-md-6
+            table.table.table-bordered.table-striped.table-responsive
+                thead
+                    tr
+                        th Wechseltrichter
+                        th Kilowattstunden
+                tbody
+                    - var total = 0;
+                    each entry in result.total
+                        - total += entry[1];
+                        tr
+                            td !{entry[0]}
+                            td.text-right !{entry[1]} kWh
+                    tr
+                        td Summe
+                        td.text-right !{total} kWh
+
+
+    .row
+        .col-xs-12
+            #kilowatthourperunit(style="width: 100%; height: 800px;")
