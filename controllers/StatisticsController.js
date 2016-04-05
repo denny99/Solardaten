@@ -34,8 +34,6 @@ function StatisticsController() {
 		database.getReport(0, undefined, [], [{}], "solarData", "getKilowattHourByUnit", 1, function (err, documents) {
 			workers--;
 
-			console.log(documents);
-
 			documents.forEach(function (doc) {
 				result.total.push([doc.key[0], _.round(doc.value, 2)]);
 			});
