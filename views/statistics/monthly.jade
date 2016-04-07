@@ -21,4 +21,28 @@ script(type="text/javascript").
         chart.draw(data, options);
     }
 
-#kilowatthourpermonth(style="width: 100%; height: 800px;")
+.container-fluid
+    .row
+        .col-xs-12
+            table.table.table-bordered.table-striped.table-responsive
+                thead
+                    tr
+                        th Monat
+                        th Karl1
+                        th Karl2
+                        th Karl3
+                        th Total
+                tbody
+                    each entry in result.monthly
+                        - var total = entry[1] + entry[2] + entry[3];
+                        tr
+                            td !{entry[0]}
+                            td.text-right !{entry[1].toFixed(2)} kWh
+                            td.text-right !{entry[2].toFixed(2)} kWh
+                            td.text-right !{entry[3].toFixed(2)} kWh
+                            td.text-right !{(total).toFixed(2)} kWh
+
+
+    .row
+        .col-xs-12
+            #kilowatthourpermonth(style="width: 100%; height: 800px;")

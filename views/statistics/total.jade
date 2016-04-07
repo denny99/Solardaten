@@ -17,7 +17,7 @@ script(type="text/javascript").
 
 .container-fluid
     .row
-        .col-md-6
+        .col-xs-12
             table.table.table-bordered.table-striped.table-responsive
                 thead
                     tr
@@ -29,10 +29,10 @@ script(type="text/javascript").
                         - total += entry[1];
                         tr
                             td !{entry[0]}
-                            td.text-right !{entry[1]} kWh
+                            td.text-right !{entry[1].toFixed(2)} kWh
                     tr
                         td Summe
-                        td.text-right !{total} kWh
+                        td.text-right !{total.toFixed(2)} kWh
 
 
     .row

@@ -76,10 +76,10 @@ function StatisticsController() {
 							var date;
 
 							date = moment.utc().set({
-								year : doc.key[1],
-								month: doc.key[2],
-								date : doc.key[3],
-								hours: doc.key[4],
+								year   : doc.key[1],
+								month  : doc.key[2],
+								date   : doc.key[3],
+								hours  : doc.key[4],
 								minutes: 0
 							}).format("DD.MM.YYYY HH:mm");
 
@@ -92,6 +92,11 @@ function StatisticsController() {
 									return v;
 								});
 							}));
+
+							_.remove(result.yesterday, function (entry) {
+								var total = entry[1] + entry[2] + entry[3];
+								return total === 0;
+							})
 						}
 					}
 
@@ -106,10 +111,10 @@ function StatisticsController() {
 		weeklyResult  = {};
 		weeklyWorkers = 0;
 
-		today    = moment.utc();
-		lastWeek = moment.utc().subtract(6, 'days');
+		today    = moment.utc().subtract(1, 'days');
+		lastWeek = moment.utc().subtract(7, 'days');
 
-		for (var i = 0; i < 7; i++) {
+		for (var i = 1; i < 8; i++) {
 			var day                                = moment.utc().subtract(i, 'days');
 			weeklyResult[day.format("DD.MM.YYYY")] = {date: day.format("DD.MM.YYYY")};
 
@@ -261,8 +266,8 @@ function StatisticsController() {
 
 	self.run = function (type, fn) {
 		switch (type) {
-			case "yesterday":
-				return self.getDailyOverview(fn);
+			case "total":
+				return self.getTotalOverView(fn);
 
 			case "weekly":
 				return self.getWeeklyOverview(fn);
@@ -274,7 +279,7 @@ function StatisticsController() {
 				return self.getYearOverView(fn);
 
 			default:
-				return self.getTotalOverView(fn);
+				return self.getDailyOverview(fn);
 		}
 	}
 }

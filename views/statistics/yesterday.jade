@@ -7,9 +7,9 @@ script(type="text/javascript").
                 !{JSON.stringify(_.concat([['Stunde', 'Karl1', 'Karl2', 'Karl3']], result.yesterday))});
 
         options = {
-            title   : 'Gestern produzierte kWh',
-            vAxis   : {format: '#.## kWh'},
-            hAxis   : {
+            title: 'Gestern produzierte kWh',
+            vAxis: {format: '#.## kWh'},
+            hAxis: {
                 showTextEvery   : 1,
                 slantedText     : true,
                 slantedTextAngle: 45
@@ -21,4 +21,34 @@ script(type="text/javascript").
         chart.draw(data, options);
     }
 
-#kilowatthouryesterday(style="width: 100%; height: 800px;")
+.container-fluid
+    .row
+        .col-xs-12
+            table.table.table-bordered.table-striped.table-responsive
+                thead
+                    tr
+                        th Trichter
+                        th Kilowattstunden
+                tbody
+                    - var total = 0, karl1 = 0, karl2 = 0, karl3 = 0;
+                    each entry in result.yesterday
+                        - karl1 += entry[1];
+                        - karl2 += entry[2];
+                        - karl3 += entry[3];
+                    tr
+                        td Karl1
+                        td.text-right !{karl1.toFixed(2)} kWh
+                    tr
+                        td Karl2
+                        td.text-right !{karl2.toFixed(2)} kWh
+                    tr
+                        td Karl3
+                        td.text-right !{karl3.toFixed(2)} kWh
+                    tr
+                        td Summe
+                        td.text-right !{(karl1 + karl2 + karl3).toFixed(2)} kWh
+
+
+    .row
+        .col-xs-12
+            #kilowatthouryesterday(style="width: 100%; height: 800px;")

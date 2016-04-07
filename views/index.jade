@@ -8,9 +8,9 @@ block content
             google.charts.setOnLoadCallback(drawChart);
         });
 
-    .container-fluid
+    .container
         .row
-            .col-md-2
+            .col-md-3
                 - var totalClass = {'class': ""};
                 - var yesterdayClass= {'class': ""};
                 - var weeklyClass= {'class': ""};
@@ -18,8 +18,8 @@ block content
                 - var yearClass= {'class': ""};
 
                 case pill
-                    when "yesterday"
-                        - yesterdayClass = {'class': "active"}
+                    when "total"
+                        - totalClass = {'class': "active"}
                     when "weekly"
                         - weeklyClass = {'class': "active"}
                     when "monthly"
@@ -27,11 +27,9 @@ block content
                     when "year"
                         - yearClass = {'class': "active"}
                     default
-                        - totalClass = {'class': "active"}
+                        - yesterdayClass = {'class': "active"}
 
                 ul.nav.nav-pills.nav-stacked
-                    li(role='presentation')&attributes(totalClass)
-                        a(href='/?type=total') Gesamt
                     li(role='presentation')&attributes(yesterdayClass)
                         a(href='/?type=yesterday') Gestern
                     li(role='presentation')&attributes(weeklyClass)
@@ -40,11 +38,13 @@ block content
                         a(href='/?type=monthly') Monatsübersicht
                     li(role='presentation')&attributes(yearClass)
                         a(href='/?type=year') Jahresrückblick
+                    li(role='presentation')&attributes(totalClass)
+                        a(href='/?type=total') Gesamt
 
-            .col-md-10
+            .col-md-9
                 case pill
-                    when "yesterday"
-                        include ./statistics/yesterday
+                    when "total"
+                        include ./statistics/total
 
                     when "weekly"
                         include ./statistics/weekly
@@ -56,4 +56,4 @@ block content
                         include ./statistics/year
 
                     default
-                        include ./statistics/total
+                        include ./statistics/yesterday

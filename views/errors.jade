@@ -16,7 +16,7 @@ block content
                     tbody
                         each error in errors
                             tr
-                                td !{moment.utc(error.datetime).format("DD.MM.YYYY HH:mm")}
+                                td !{moment(error.datetime).format("DD.MM.YYYY HH:mm")}
                                 td !{error.reason}
                                 td
                                     - var attr = {'href': '/errors/' + error._id}
