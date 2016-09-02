@@ -512,8 +512,8 @@ Database.prototype.getReportByKeys = function (offset, limit, keys, design, view
  */
 Database.getNanoInstance = function () {
 	return require('nano')(
-		'https://' + (global.config.db_login.auth_key + ':' + global.config.db_login.auth_secret).toString('base64') +
-		'@' + global.config.db_host);
+		'https://' + (process.env.db_auth_key + ':' +process.env.db_auth_secret).toString('base64') +
+		'@' + process.env.db_host);
 };
 
 /**

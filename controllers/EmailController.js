@@ -12,9 +12,9 @@ function EmailController() {
 	var workers = 0;
 
 	var imap = new Imap({
-		user    : config.strato.email,
-		password: config.strato.password,
-		host    : config.strato.host,
+		user    : process.env.strato_email,
+		password: process.env.strato_password,
+		host    : process.env.strato_host,
 		port    : 993,
 		tls     : true
 	});
