@@ -1,28 +1,3 @@
-/**
- * Created by Carsten Pogede on 04.08.2014.
- *
- * Anwendung:
- * var db_activities = DBStorage.getDatabase("Activities");
- * db_activities.getDocumentByUNId(str_UNId);
- *
- * NANO API Beschreibung
- * https://github.com/dscape/nano
- *
- * Die Bibliothek enthält eine Klasse die genau ein
- * Objekt als Datenbankinstanz zurückgibt.
- * Ist das Objekt schon vorhanden dann wird es nicht erneut
- * angelegt
- *
- * Im Sprachgebrauch nano wird für ein Datensatz auch der Begriff document
- * verwendet. Da dieser auch in IBM Notes Verwendung findet, wird
- * für ein Datensatz document verwendet
- *
- * Die Konfiguration Datenbank, Zugang erfolgt über die localvoucher json
- Config.
- * Dort sind Host, User, Pass, und Db liste hinterlegt
- *
- */
-
 var moment          = require("moment");
 var ErrorController = require('../controllers/ErrorController');
 var errorController = new ErrorController();

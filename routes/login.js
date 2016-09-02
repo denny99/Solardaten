@@ -39,8 +39,7 @@ router.get('/', function (req, res) {
 	var error = req.query.hasOwnProperty("error");
 	res.render('login', {
 		title: 'Login',
-		error: error,
-		path : JSON.stringify(global.config.BASE_URL)
+		error: error
 	});
 });
 
