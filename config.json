@@ -1,38 +1,38 @@
 {
-	"development": {
-		"SITE_SECRET": "24rq3w5rwsefrq435",
-		"BASE_URL"   : "http://localhost:3000",
-		"HOST"       : "localhost",
-		"db_login"   : {
-			"auth_key"   : "doessoldiftnedivingreder",
-			"auth_secret": "85072aeb42c836f97805bc1abb1465b86f6e0371"
-		},
-		"db_list"    : {
-			"SolarData"      : "solardata"
-		},
-		"db_host"    : "merpg.cloudant.com",
-		"strato": {
-			"email": "solardaten@mvh-ag.de",
-			"password": "solardaten55469",
-			"host": "imap.strato.de"
-		}
-	},
-	"production" : {
-		"SITE_SECRET"     : "24rq3w5rwsefrq435",
-		"BASE_URL"        : "https://solardata.herokuapp.com",
-		"HOST"            : "solardata.herokuapp.com",
-		"db_login"        : {
-			"auth_key"   : "doessoldiftnedivingreder",
-			"auth_secret": "85072aeb42c836f97805bc1abb1465b86f6e0371"
-		},
-		"db_list"    : {
-			"SolarData"      : "solardata"
-		},
-		"db_host"         : "merpg.cloudant.com",
-		"strato": {
-			"email": "solardaten@mvh-ag.de",
-			"password": "solardaten55469",
-			"host": "imap.strato.de"
-		}
-	}
+  "development": {
+    "SITE_SECRET": "24rq3w5rwsefrq435",
+    "BASE_URL": "http://localhost:3000",
+    "HOST": "localhost",
+    "db_login": {
+      "auth_key": "doessoldiftnedivingreder",
+      "auth_secret": "85072aeb42c836f97805bc1abb1465b86f6e0371"
+    },
+    "db_list": {
+      "SolarData": "solardata"
+    },
+    "db_host": "merpg.cloudant.com",
+    "strato": {
+      "email": "solardaten@mvh-ag.de",
+      "password": "solardaten55469",
+      "host": "imap.strato.de"
+    }
+  },
+  "production": {
+    "SITE_SECRET": "24rq3w5rwsefrq435",
+    "BASE_URL": "https://solardata.herokuapp.com",
+    "HOST": "solardata.herokuapp.com",
+    "db_login": {
+      "auth_key": "4fa2d135-7749-48ee-9065-66a40ab9bf57-bluemix",
+      "auth_secret": "bc39be5e19aa99d83116c82b56b84978d2dcfe816fefa793e8a2a34fc4fefb4d"
+    },
+    "db_list": {
+      "SolarData": "solardata"
+    },
+    "db_host": "4fa2d135-7749-48ee-9065-66a40ab9bf57-bluemix.cloudant.com",
+    "strato": {
+      "email": "solardaten@mvh-ag.de",
+      "password": "solardaten55469",
+      "host": "imap.strato.de"
+    }
+  }
 }
