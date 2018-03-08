@@ -22,16 +22,16 @@
     "BASE_URL": "https://solardata.herokuapp.com",
     "HOST": "solardata.herokuapp.com",
     "db_login": {
-      "auth_key": "4fa2d135-7749-48ee-9065-66a40ab9bf57-bluemix",
-      "auth_secret": "bc39be5e19aa99d83116c82b56b84978d2dcfe816fefa793e8a2a34fc4fefb4d"
+      "auth_key": "",
+      "auth_secret": ""
     },
     "db_list": {
       "SolarData": "solardata"
     },
-    "db_host": "4fa2d135-7749-48ee-9065-66a40ab9bf57-bluemix.cloudant.com",
+    "db_host": "",
     "strato": {
-      "email": "solardaten@mvh-ag.de",
-      "password": "solardaten55469",
+      "email": "",
+      "password": "",
       "host": "imap.strato.de"
     }
   }
