@@ -31,7 +31,7 @@ function Database(db) {
 
 /**
  * @callback reportCB
- * @param {LocalvoucherError} err
+ * @param {BackendError} err
  * @param {[Object]} documents
  */
 
@@ -43,7 +43,7 @@ function Database(db) {
 
 /**
  * @typedef {Object} Tv4Result
- * @property {LocalvoucherError} error error message from tv4
+ * @property {BackendError} error error message from tv4
  * @property {boolean} valid valid or not valid
  */
 

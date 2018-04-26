@@ -6,7 +6,7 @@ function ErrorController() {
 	var self = this;
 
 	/**
-	 * @typedef {Object} LocalvoucherError
+	 * @typedef {Object} BackendError
 	 * @property {number} code HTTP Status Code
 	 * @property {string} message what happened? (not found, invalid query)
 	 * @property {string} reason specific reason why request has failed (more detailed, e.g. tv4 error, couch error)
@@ -19,7 +19,7 @@ function ErrorController() {
 	 * @param {string} field
 	 * @param {string} [reason]
 	 * @param {string} [type]
-	 * @returns {LocalvoucherError}
+	 * @returns {BackendError}
 	 */
 	function createErrorMessage(code, field, reason, type) {
 		var message, err;
@@ -67,7 +67,7 @@ function ErrorController() {
 	/**
 	 * analyze and process tv4 error messages
 	 * @param {Tv4Error} err
-	 * @returns {LocalvoucherError}
+	 * @returns {BackendError}
 	 */
 	function analyzeTv4Error(err) {
 		var reason = "property";
@@ -81,7 +81,7 @@ function ErrorController() {
 	 * analyze and process db storage errors
 	 * @param {DatabaseError} err
 	 * @param {string} field
-	 * @returns {LocalvoucherError}
+	 * @returns {BackendError}
 	 */
 	function analyzeDatabaseErrorMessage(err, field) {
 		var usedField;
@@ -115,7 +115,7 @@ function ErrorController() {
 	 * create an api error message
 	 * @param {number} status
 	 * @param {Object} [res]
-	 * @returns {LocalvoucherError}
+	 * @returns {BackendError}
 	 */
 	self.sendStatusMessage = function (status, res) {
 		self.createErrorMessage(status, "", res);
@@ -126,7 +126,7 @@ function ErrorController() {
 	 * @param {Tv4Error | DatabaseError | number} err
 	 * @param {string} [field]
 	 * @param {Object} [res]
-	 * @returns {LocalvoucherError}
+	 * @returns {BackendError}
 	 */
 	self.createErrorMessage = function (err, field, res) {
 		var error;
@@ -159,7 +159,7 @@ function ErrorController() {
 
 	/**
 	 * send error
-	 * @param {LocalvoucherError} err
+	 * @param {BackendError} err
 	 * @param {Object} res
 	 */
 	self.send = function (err, res) {
